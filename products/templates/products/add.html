@@ -1,0 +1,38 @@
+{% extends 'products/base.html' %}
+
+{% block title %}إضافة منتج جديد{% endblock %}
+
+{% block content %}
+<div style="max-width: 600px; margin: 0 auto;">
+    <div style="margin-bottom: 2rem;">
+        <a href="{% url 'products:product_list' %}" style="text-decoration: none; color: var(--text-muted); display: flex; align-items: center; gap: 0.5rem;">
+            <span>&rarr;</span> العودة للقائمة
+        </a>
+    </div>
+
+    <div class="card">
+        <h2 style="margin-bottom: 2rem; font-weight: 700; color: var(--primary);">إضافة منتج جديد</h2>
+        
+        <form method="post">
+            {% csrf_token %}
+            
+            {% for field in form %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}
+                <div style="color: var(--danger); font-size: 0.85rem; margin-top: 0.25rem;">
+                    {{ field.errors|striptags }}
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+
+            <div style="margin-top: 2rem; display: flex; gap: 1rem;">
+                <button type="submit" class="btn btn-primary" style="flex: 2;">حفظ المنتج</button>
+                <a href="{% url 'products:product_list' %}" class="btn btn-secondary" style="flex: 1;">إلغاء</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

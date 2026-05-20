@@ -1,0 +1,89 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}متجر المنتجات{% endblock %}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+</head>
+<body>
+
+    <!-- ===== NAVIGATION BAR الذكي ===== -->
+    <nav class="navbar">
+        <!-- الشعار والروابط الرئيسية -->
+        <div class="navbar-links" style="flex:1;">
+            <a href="{% url 'products:product_list' %}" class="navbar-brand">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/>
+                    <path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/>
+                </svg>
+                متجر الإلكترونيات
+            </a>
+
+            {% if user.is_authenticated %}
+            <!-- روابط التنقل - تظهر فقط للمستخدم المسجل -->
+            <a href="{% url 'products:product_list' %}" class="nav-link" id="nav_products">📦 المنتجات</a>
+            <a href="{% url 'delivery:delivery_list' %}" class="nav-link" id="nav_delivery">🚚 التوصيل</a>
+            {% endif %}
+        </div>
+
+        <!-- منطقة المستخدم -->
+        <div class="navbar-links">
+            {% if user.is_authenticated %}
+                <!-- مستخدم مسجل دخوله -->
+                <div class="user-badge">
+                    <div class="avatar">{{ user.username|slice:":1"|upper }}</div>
+                    <span>{{ user.username }}</span>
+                    {% if user.is_staff %}
+                        <span class="permission-badge">مدير</span>
+                    {% endif %}
+                </div>
+
+                {% if perms.products.add_product or user.is_staff %}
+                <!-- زر إضافة منتج - يظهر فقط لمن يملك الصلاحية -->
+                <a href="{% url 'products:product_create' %}" class="btn btn-primary" id="nav_add_product">
+                    ➕ إضافة منتج
+                </a>
+                {% endif %}
+
+                {% if user.username == 'y' or user.is_superuser %}
+                <!-- زر إضافة حساب - يظهر فقط للمدير y -->
+                <a href="{% url 'accounts:register' %}" class="btn" id="nav_add_account"
+                   style="background:rgba(34,197,94,0.15);color:#16a34a;border:1px solid rgba(34,197,94,0.35);">
+                    👤 إضافة حساب
+                </a>
+                {% endif %}
+
+                <!-- زر تسجيل الخروج -->
+                <form method="post" action="{% url 'accounts:logout' %}" class="logout-form">
+                    {% csrf_token %}
+                    <button type="submit" class="btn-logout" id="nav_logout_btn">تسجيل الخروج</button>
+                </form>
+
+            {% else %}
+                <!-- مستخدم غير مسجل - يرى فقط زر تسجيل الدخول -->
+                <a href="{% url 'accounts:login' %}" class="btn btn-outline" id="nav_login_btn">تسجيل الدخول</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <!-- رسائل النظام (messages) -->
+    {% if messages %}
+    <div class="messages-bar">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            {% if message.tags == 'success' %}✅{% elif message.tags == 'error' %}❌{% elif message.tags == 'info' %}ℹ️{% else %}⚠️{% endif %}
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="container animate-fade-in">
+        {% block content %}{% endblock %}
+    </div>
+
+</body>
+</html>

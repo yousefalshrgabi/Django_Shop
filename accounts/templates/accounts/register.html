@@ -1,0 +1,57 @@
+{% extends 'accounts/base_auth.html' %}
+
+{% block title %}إنشاء حساب - المتجر{% endblock %}
+
+{% block content %}
+<h2>إنشاء حساب جديد ✨</h2>
+<p class="subtitle">انضم إلى نظام إدارة المتجر</p>
+
+<form method="post" action="{% url 'accounts:register' %}">
+    {% csrf_token %}
+
+    <div class="form-group">
+        <label for="{{ form.username.id_for_label }}">اسم المستخدم</label>
+        {{ form.username }}
+        {% if form.username.errors %}
+            <ul class="errorlist">{% for e in form.username.errors %}<li>{{ e }}</li>{% endfor %}</ul>
+        {% endif %}
+    </div>
+
+    <div class="form-group">
+        <label for="{{ form.email.id_for_label }}">البريد الإلكتروني</label>
+        {{ form.email }}
+        {% if form.email.errors %}
+            <ul class="errorlist">{% for e in form.email.errors %}<li>{{ e }}</li>{% endfor %}</ul>
+        {% endif %}
+    </div>
+
+    <div class="form-group">
+        <label for="{{ form.password1.id_for_label }}">كلمة المرور</label>
+        {{ form.password1 }}
+        {% if form.password1.errors %}
+            <ul class="errorlist">{% for e in form.password1.errors %}<li>{{ e }}</li>{% endfor %}</ul>
+        {% endif %}
+    </div>
+
+    <div class="form-group">
+        <label for="{{ form.password2.id_for_label }}">تأكيد كلمة المرور</label>
+        {{ form.password2 }}
+        {% if form.password2.errors %}
+            <ul class="errorlist">{% for e in form.password2.errors %}<li>{{ e }}</li>{% endfor %}</ul>
+        {% endif %}
+    </div>
+
+    {% if form.non_field_errors %}
+    <div style="margin-bottom:1rem;">
+        {% for e in form.non_field_errors %}<div class="message error">{{ e }}</div>{% endfor %}
+    </div>
+    {% endif %}
+
+    <button type="submit" class="btn-submit" id="btn_register_submit">إنشاء الحساب</button>
+</form>
+{% endblock %}
+
+{% block footer %}
+لديك حساب بالفعل؟
+<a href="{% url 'accounts:login' %}" id="link_go_login">تسجيل الدخول</a>
+{% endblock %}

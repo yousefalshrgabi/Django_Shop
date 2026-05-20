@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>متجر الإلكترونيات - الرئيسية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-hover: #4f46e5;
+            --bg: #0f0f1a;
+            --card-bg: #1a1a2e;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --danger: #ef4444;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: var(--bg);
+            color: var(--text-main);
+            min-height: 100vh;
+            background-image:
+                radial-gradient(ellipse at 15% 50%, rgba(99,102,241,0.18) 0%, transparent 55%),
+                radial-gradient(ellipse at 85% 20%, rgba(139,92,246,0.12) 0%, transparent 55%),
+                radial-gradient(ellipse at 50% 90%, rgba(99,102,241,0.08) 0%, transparent 50%);
+        }
+
+        /* ===== TOP BAR (بدون Navbar كامل - فقط زر تسجيل الدخول) ===== */
+        .top-bar {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 1.25rem 2rem;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 10;
+        }
+
+        .btn-login-top {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.55rem 1.3rem;
+            border-radius: 0.625rem;
+            border: 1px solid rgba(99,102,241,0.4);
+            background: rgba(99,102,241,0.1);
+            color: #a5b4fc;
+            font-family: 'Cairo', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .btn-login-top:hover {
+            background: rgba(99,102,241,0.2);
+            border-color: rgba(99,102,241,0.7);
+            color: white;
+            transform: translateY(-1px);
+        }
+
+        .btn-dashboard {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.55rem 1.3rem;
+            border-radius: 0.625rem;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            font-family: 'Cairo', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+            box-shadow: 0 2px 10px rgba(99,102,241,0.3);
+        }
+
+        .btn-dashboard:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 16px rgba(99,102,241,0.5);
+        }
+
+        .user-greeting {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .user-avatar-small {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        .welcome-text {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        .welcome-text strong {
+            color: #a5b4fc;
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            padding: 6rem 2rem 3rem;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(99,102,241,0.15);
+            border: 1px solid rgba(99,102,241,0.3);
+            border-radius: 2rem;
+            padding: 0.4rem 1rem;
+            font-size: 0.8rem;
+            color: #a5b4fc;
+            margin-bottom: 1.5rem;
+            animation: fadeInDown 0.6s ease-out;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 900;
+            line-height: 1.15;
+            margin-bottom: 1.25rem;
+            animation: fadeInUp 0.7s ease-out 0.1s both;
+        }
+
+        .hero h1 .highlight {
+            background: linear-gradient(135deg, #6366f1, #a78bfa, #38bdf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 520px;
+            line-height: 1.7;
+            margin-bottom: 2.5rem;
+            animation: fadeInUp 0.7s ease-out 0.2s both;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            animation: fadeInUp 0.7s ease-out 0.3s both;
+        }
+
+        .btn-hero-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.875rem 2rem;
+            border-radius: 0.75rem;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.25s;
+            box-shadow: 0 4px 20px rgba(99,102,241,0.4);
+        }
+
+        .btn-hero-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(99,102,241,0.55);
+        }
+
+        .btn-hero-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.875rem 2rem;
+            border-radius: 0.75rem;
+            border: 1px solid rgba(255,255,255,0.15);
+            background: rgba(255,255,255,0.05);
+            color: var(--text-main);
+            font-family: 'Cairo', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.25s;
+        }
+
+        .btn-hero-secondary:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+
+        /* ===== FEATURE CARDS ===== */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.25rem;
+            max-width: 900px;
+            width: 100%;
+            margin-top: 4rem;
+            animation: fadeInUp 0.7s ease-out 0.4s both;
+        }
+
+        .feature-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 1rem;
+            padding: 1.75rem;
+            text-align: right;
+            transition: all 0.25s;
+        }
+
+        .feature-card:hover {
+            background: rgba(99,102,241,0.08);
+            border-color: rgba(99,102,241,0.25);
+            transform: translateY(-3px);
+        }
+
+        .feature-icon {
+            font-size: 2.25rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 0.4rem;
+            color: var(--text-main);
+        }
+
+        .feature-card p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* ===== FOOTER ===== */
+        .home-footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            opacity: 0.6;
+        }
+
+        /* ===== MESSAGES ===== */
+        .messages-top {
+            position: fixed;
+            top: 5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            min-width: 320px;
+        }
+
+        .msg-item {
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.625rem;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+
+        .msg-success { background: rgba(34,197,94,0.2); border: 1px solid rgba(34,197,94,0.4); color: #86efac; }
+        .msg-error   { background: rgba(239,68,68,0.2);  border: 1px solid rgba(239,68,68,0.4);  color: #fca5a5; }
+        .msg-info    { background: rgba(99,102,241,0.2); border: 1px solid rgba(99,102,241,0.4); color: #a5b4fc; }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-15px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== TOP BAR - زر تسجيل الدخول فقط (بدون Navbar كامل) ===== -->
+    <div class="top-bar">
+        {% if user.is_authenticated %}
+            <!-- مستخدم مسجل: نرحب به ونعطيه رابط لوحة التحكم -->
+            <div class="user-greeting">
+                <div class="user-avatar-small">{{ user.username|slice:":1"|upper }}</div>
+                <span class="welcome-text">مرحباً، <strong>{{ user.username }}</strong></span>
+            </div>
+            &nbsp;&nbsp;
+            <a href="{% url 'products:product_list' %}" class="btn-dashboard" id="btn_go_dashboard">
+                📊 لوحة التحكم
+            </a>
+        {% else %}
+            <!-- زائر: زر تسجيل الدخول فقط -->
+            <a href="{% url 'accounts:login' %}" class="btn-login-top" id="btn_top_login">
+                🔑 تسجيل الدخول
+            </a>
+        {% endif %}
+    </div>
+
+    <!-- رسائل النظام -->
+    {% if messages %}
+    <div class="messages-top">
+        {% for message in messages %}
+        <div class="msg-item msg-{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- ===== HERO ===== -->
+    <div class="hero">
+        <div class="hero-badge">
+            🛒 نظام إدارة المتجر
+        </div>
+
+        <h1>
+            إدارة متجرك<br>
+            <span class="highlight">بكل سهولة واحترافية</span>
+        </h1>
+
+        <p>
+            منصة متكاملة لإدارة المنتجات وسائقي التوصيل،
+            مع نظام صلاحيات متقدم يضمن أمان بياناتك.
+        </p>
+
+        <div class="hero-actions">
+            {% if user.is_authenticated %}
+                <a href="{% url 'products:product_list' %}" class="btn-hero-primary" id="btn_hero_products">
+                    📦 إدارة المنتجات
+                </a>
+                <a href="{% url 'delivery:delivery_list' %}" class="btn-hero-secondary" id="btn_hero_delivery">
+                    🚚 إدارة التوصيل
+                </a>
+            {% else %}
+                <a href="{% url 'accounts:login' %}" class="btn-hero-primary" id="btn_hero_login">
+                    🔑 تسجيل الدخول للبدء
+                </a>
+            {% endif %}
+        </div>
+
+        <!-- Feature Cards -->
+        <div class="features">
+            <div class="feature-card">
+                <div class="feature-icon">📦</div>
+                <h3>إدارة المنتجات</h3>
+                <p>إضافة وتعديل وحذف المنتجات بسهولة تامة مع عرض شامل لكل البيانات.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🚚</div>
+                <h3>إدارة التوصيل</h3>
+                <p>متابعة سائقي التوصيل وبياناتهم الكاملة من مكان واحد.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🛡️</div>
+                <h3>نظام صلاحيات</h3>
+                <p>تحكم دقيق في من يستطيع إضافة أو تعديل أو حذف البيانات.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="home-footer">
+        © 2026 متجر الإلكترونيات — جميع الحقوق محفوظة
+    </div>
+
+</body>
+</html>

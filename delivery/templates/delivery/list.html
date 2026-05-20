@@ -1,0 +1,51 @@
+{% extends 'delivery/base.html' %}
+
+{% block title %}قائمة السائقين{% endblock %}
+
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+    <h1 style="font-weight: 700;">السائقين المتاحة</h1>
+    <span style="color: var(--text-muted);">إجمالي: {{ delivery.count }}</span>
+</div>
+
+{% if delivery %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>اسم السائق</th>
+            <th>رقم الهاتف</th>
+            <th>البريد</th>
+            <th>العنوان</th>
+            <th style="text-align: center;">العمليات</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in delivery %}
+        <tr>
+            <td style="font-weight: 600;">{{ item.name }}</td>
+            <td style="color: var(--primary); font-weight: 700;">{{ item.phone }}</td>
+            <td style="color: var(--text-muted); font-size: 0.9rem;">{{ item.email }}</td>
+            <td style="color: var(--text-muted); font-size: 0.9rem;">{{ item.address|truncatechars:30 }}</td>
+            <td style="text-align: center;">
+                <div style="display: flex; gap: 0.5rem; justify-content: center;">
+                    <a href="{% url 'delivery:delivery_update' item.pk %}" class="btn" style="background: #e0e7ff; color: var(--primary); padding: 0.4rem 0.8rem;">
+                        تعديل
+                    </a>
+                    <a href="{% url 'delivery:delivery_delete' item.pk %}" class="btn" style="background: #fee2e2; color: var(--danger); padding: 0.4rem 0.8rem;">
+                        حذف
+                    </a>
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<div class="card" style="text-align: center; padding: 4rem;">
+    <div style="font-size: 3rem; margin-bottom: 1rem;">📦</div>
+    <h3>لا يوجد سائقين حالياً</h3>
+    <p style="color: var(--text-muted); margin-bottom: 2rem;">ابدأ بإضافة سائق لمتجرك</p>
+    <a href="{% url 'delivery:delivery_create' %}" class="btn btn-primary">إضافة موصل</a>
+</div>
+{% endif %}
+{% endblock %}

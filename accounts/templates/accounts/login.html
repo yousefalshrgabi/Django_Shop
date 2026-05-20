@@ -1,0 +1,40 @@
+{% extends 'accounts/base_auth.html' %}
+
+{% block title %}تسجيل الدخول - المتجر{% endblock %}
+
+{% block content %}
+<h2>مرحباً بعودتك 👋</h2>
+<p class="subtitle">سجّل دخولك للوصول إلى لوحة التحكم</p>
+
+<form method="post" action="{% url 'accounts:login' %}">
+    {% csrf_token %}
+
+    <div class="form-group">
+        <label for="{{ form.username.id_for_label }}">اسم المستخدم</label>
+        {{ form.username }}
+        {% if form.username.errors %}
+            <ul class="errorlist">{% for e in form.username.errors %}<li>{{ e }}</li>{% endfor %}</ul>
+        {% endif %}
+    </div>
+
+    <div class="form-group">
+        <label for="{{ form.password.id_for_label }}">كلمة المرور</label>
+        {{ form.password }}
+        {% if form.password.errors %}
+            <ul class="errorlist">{% for e in form.password.errors %}<li>{{ e }}</li>{% endfor %}</ul>
+        {% endif %}
+    </div>
+
+    {% if form.non_field_errors %}
+    <div class="errorlist" style="margin-bottom:1rem;">
+        {% for e in form.non_field_errors %}<div class="message error">{{ e }}</div>{% endfor %}
+    </div>
+    {% endif %}
+
+    <button type="submit" class="btn-submit" id="btn_login_submit">تسجيل الدخول</button>
+</form>
+{% endblock %}
+
+{% block footer %}
+<a href="{% url 'accounts:home' %}" id="link_go_home">← العودة للصفحة الرئيسية</a>
+{% endblock %}
