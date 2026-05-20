@@ -151,5 +151,4 @@ REST_FRAMEWORK = {
     # 'PAGE_SIZE': 10,
 }
 
-import os
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = BASE_DIR / 'staticfiles'
