@@ -93,7 +93,7 @@ class ProductUpdateView(LoginRequiredMixin, PermissionRequiredMixin, View):
     permission_required = 'products.change_product'
     raise_exception = True
 
-    def get(self, request, pk):
+    def get(self, request, pk): 
         product = get_object_or_404(Product, pk=pk)
         form = ProductForm(instance=product)
         return render(request, self.template_name, {'form': form, 'product': product})
@@ -102,7 +102,7 @@ class ProductUpdateView(LoginRequiredMixin, PermissionRequiredMixin, View):
         product = get_object_or_404(Product, pk=pk)
         form = ProductForm(request.POST, instance=product)
         if form.is_valid():
-            form.save()
+            form.save() 
             return redirect('products:product_list')
         return render(request, self.template_name, {'form': form, 'product': product})
 

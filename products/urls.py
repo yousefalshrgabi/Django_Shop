@@ -13,3 +13,5 @@ urlpatterns = [
     # حذف منتج - يتطلب صلاحية delete_product
     path('delete/<int:pk>/', views.ProductDeleteView.as_view(), name='product_delete'),
 ]
+
+
